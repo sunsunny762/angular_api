@@ -18,7 +18,7 @@ router.post("/login", login);
 router.patch("/product", updateProduct);
 router.post("/addList", createList);
 router.get("/getList/:id", getList);
-router.get("/deleteList", deleteList);
+router.post("/deleteList", deleteList);
 router.delete("/product/:id", deleteProduct);
 
 module.exports = router;

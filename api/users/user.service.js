@@ -40,8 +40,7 @@ module.exports = {
   },
   deleteList: (data, callBack) => {
     pool.query(
-      `delete from userList where userId = ? and productId = ? 
-                values(?,?)`,
+      `delete from userList where userId = ? and productId = ?`,
       [
         data.userId,
         data.productId,
@@ -56,7 +55,7 @@ module.exports = {
   },
   getList: (id, callBack) => {
     pool.query(
-      `select DISTINCT(p.id), p.* from products p inner Join userList u on p.id = u.productId  where u.userId = ? group by p.id`,
+      `select DISTINCT(p.id), p.* from products p inner Join userList u on p.id = u.productId  where u.userId = ? and p.status = 1 group by p.id`,
       [id],
       (error, results, fields) => {
         if (error) {
@@ -92,7 +91,7 @@ module.exports = {
   },
   getProducts: callBack => {
     pool.query(
-      `select * from products where status = 1`,
+      `SELECT p.*,ul.userId from products p LEFT join userlist ul on p.id = ul.productId where status = 1 order by p.id`,
       [],
       (error, results, fields) => {
         if (error) {
